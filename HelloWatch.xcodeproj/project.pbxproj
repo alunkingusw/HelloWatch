@@ -71,7 +71,7 @@
 			);
 			target = 5D603AB62F30BC0D00F66363 /* HelloWatchWidgetExtension */;
 		};
-		5D603ACC2F30BC2600F66363 /* Exceptions for "HelloWatch Watch App" folder in "HelloWatchWidgetExtension" target */ = {
+		5D603ACE2F30DB7200F66363 /* Exceptions for "HelloWatch Watch App" folder in "HelloWatchWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				models/TimerModel.swift,
@@ -92,7 +92,7 @@
 		5DE855D22F1E446F00CA913A /* HelloWatch Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				5D603ACC2F30BC2600F66363 /* Exceptions for "HelloWatch Watch App" folder in "HelloWatchWidgetExtension" target */,
+				5D603ACE2F30DB7200F66363 /* Exceptions for "HelloWatch Watch App" folder in "HelloWatchWidgetExtension" target */,
 			);
 			path = "HelloWatch Watch App";
 			sourceTree = "<group>";

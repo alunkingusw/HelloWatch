@@ -10,22 +10,26 @@ import SwiftUI
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), emoji: "😀")
+        SimpleEntry(date: Date(), timerDetails: TimerDetails(), counter:1)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), emoji: "😀")
+        //load the model
+        var timerModel = TimerModel()
+        let entry = SimpleEntry(date: Date(), timerDetails:timerModel.timerDetails, counter:1)
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+        //load the model
+        let timerModel = TimerModel()
         var entries: [SimpleEntry] = []
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, emoji: "😀")
+        for secondOffset in 0 ..< 60 {
+            let entryDate = Calendar.current.date(byAdding: .second, value: secondOffset, to: currentDate)!
+            let entry = SimpleEntry(date: entryDate, timerDetails: timerModel.timerDetails, counter:secondOffset)
             entries.append(entry)
         }
 
@@ -38,9 +42,11 @@ struct Provider: TimelineProvider {
 //    }
 }
 
+//add the data here which you need
 struct SimpleEntry: TimelineEntry {
     let date: Date
-    let emoji: String
+    let timerDetails:TimerDetails
+    let counter:Int
 }
 
 struct HelloWatchWidgetEntryView : View {
@@ -50,11 +56,10 @@ struct HelloWatchWidgetEntryView : View {
         VStack {
             HStack {
                 Text("Time:")
-                Text(entry.date, style: .time)
+                Text(String(entry.counter))
             }
+            Text(String(entry.timerDetails.timeElapsed))
 
-            Text("Emoji:")
-            Text(entry.emoji)
         }
     }
 }
@@ -74,7 +79,7 @@ struct HelloWatchWidget: Widget {
                     .background()
             }
         }
-        .configurationDisplayName("My Widget")
+        .configurationDisplayName("Stopwatch Widget")
         .description("This is an example widget.")
     }
 }
@@ -82,6 +87,6 @@ struct HelloWatchWidget: Widget {
 #Preview(as: .accessoryRectangular) {
     HelloWatchWidget()
 } timeline: {
-    SimpleEntry(date: .now, emoji: "😀")
-    SimpleEntry(date: .now, emoji: "🤩")
+    SimpleEntry(date: .now, timerDetails:TimerDetails(), counter:1)
+    SimpleEntry(date: .now, timerDetails:TimerDetails(), counter:1)
 }
