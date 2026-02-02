@@ -17,6 +17,9 @@ class TimerModel:ObservableObject{
      */
     var timer: Timer?
     
+    init(){
+        load()
+    }
     
     func start(){
         if timerDetails.isRunning == false{
@@ -58,11 +61,27 @@ class TimerModel:ObservableObject{
     func reset(){
         //fill in missing code
     }
+    
     func save(){
-        
+        do{
+            let data = try JSONEncoder().encode(timerDetails)
+            let url = URL.documentsDirectory.appending(path:"HelloWatch")
+            try data.write(to:url, options:[.atomic, .completeFileProtection])
+        } catch {
+            print ("Save failed")
+        }
     }
+    
     func load(){
-        
+        do{
+            let url = URL.documentsDirectory.appending(path:"HelloWatch")
+            let data = try Data(contentsOf:url)
+            timerDetails = try JSONDecoder().decode(TimerDetails.self, from: data)
+        }catch{
+            print ("model not found")
+            //return empty model
+            timerDetails = TimerDetails()
+        }
     }
     
 }

@@ -37,7 +37,7 @@ struct ContentView: View {
             switch scenePhase{
             case .background:
                 print ("background")
-                //save here
+                timerModel.save()
             case .inactive:
                 
                 print ("inactive")
