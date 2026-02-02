@@ -11,7 +11,9 @@ import SwiftUI
 struct HelloWatch_Watch_AppApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            //create timermodel and pass to content view
+            @StateObject var timerModel:TimerModel = TimerModel()
+            ContentView(timerModel:timerModel)
         }
     }
 }

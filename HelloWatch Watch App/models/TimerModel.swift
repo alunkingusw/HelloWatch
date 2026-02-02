@@ -6,9 +6,10 @@
 //
 import SwiftUI
 
-class TimerModel {
+
+class TimerModel:ObservableObject{
     
-    var timerDetails: TimerDetails = TimerDetails()
+    @Published var timerDetails: TimerDetails = TimerDetails()
     /* the question mark means that the variable is an 'optional'
      * optional values can be null or not null, we are not sure
      * so we mark them with a question mark.
@@ -24,6 +25,9 @@ class TimerModel {
                 self.timerDetails.timeElapsed += 0.01
             }
             
+        }else{
+            //record a lap here
+            recordLap()
         }
     }
     
@@ -43,14 +47,27 @@ class TimerModel {
     }
     
     func recordLap(){
-        //fill in missing code
+        if let lastLap = timerDetails.laps.last{
+            timerDetails.laps.append(timerDetails.timeElapsed - lastLap)
+        }else{
+            timerDetails.laps.append(timerDetails.timeElapsed)
+        }
+        
+        
     }
     func reset(){
         //fill in missing code
     }
+    func save(){
+        
+    }
+    func load(){
+        
+    }
+    
 }
 
-struct TimerDetails{
+struct TimerDetails:Codable{
     var laps:[TimeInterval]
     var isRunning:Bool
     var timeElapsed:TimeInterval
